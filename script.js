@@ -6,10 +6,12 @@ let displayNum = '0';
 let firstValue = null;
 let secondValue = null;
 let operator = null;
-let previousKeyType = null;
+let previousKeyType = null; //['num','operator','other']
 
 keys.addEventListener("click", (e) => {
 	const target = e.target;
+
+	// console.log(`target ==> ${target.value}`)
 	
 	if (target.matches("button")) {
 
@@ -70,8 +72,8 @@ keys.addEventListener("click", (e) => {
 function calculatorDisplay(displayValue) {
 	const display = document.querySelector('.display')
     display.innerText = displayValue;
-    if (displayValue.length > 9) {
-        display.innerText = displayValue.substring(0, 9);
+    if (displayValue.length > 15) {
+        display.innerText = displayValue.substring(0, 15);
     }
 }
 
