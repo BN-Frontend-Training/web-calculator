@@ -27,7 +27,7 @@ keys.addEventListener("click", (e) => {
 			} else {
 				displayNum += key;
 			}
-			updateDisplay(displayNum);
+			calculatorDisplay(displayNum);
 		} else if (target.classList.contains("operator")) {
 			// Operator Keys
 			if (key === '+' || key === '-' || key === '*' || key === '/') {
@@ -39,9 +39,9 @@ keys.addEventListener("click", (e) => {
 				firstValue = displayNum;
 				operator = key;
 
-				if (firstValue && operator) {
-					updateDisplay(operate(operator, firstValue, displayNum));
-				}
+				// if (firstValue && operator) {
+				// 	calculatorDisplay(operate(operator, firstValue, displayNum));
+				// }
 			}
 		} else {
 			// Others
@@ -51,7 +51,7 @@ keys.addEventListener("click", (e) => {
 				} else if (previousKeyType === 'operator') {
 					displayNum = '0.';
 				}
-				updateDisplay(displayNum);
+				calculatorDisplay(displayNum);
 			}
 			
 			if (key === 'clear') {
@@ -61,16 +61,53 @@ keys.addEventListener("click", (e) => {
 			if (key === 'calculate') {
 				// previousKeyType = key;
 				secondValue = displayNum;
-				updateDisplay(operate(operator, firstValue, secondValue));
+				calculatorDisplay(operate(operator, firstValue, secondValue));
 			}
 		}
   	}
 });
 
-function updateDisplay(displayValue) {
+function calculatorDisplay(displayValue) {
 	const display = document.querySelector('.display')
     display.innerText = displayValue;
     if (displayValue.length > 9) {
         display.innerText = displayValue.substring(0, 9);
     }
 }
+
+function operate(operator, n1, n2) {
+	console.log(`operator ==> ${operator} n1 ==> ${parseFloat(n1)} n2 ==> ${parseFloat(n2)}`);
+	const num1 = parseFloat(n1);
+	const num2 = parseFloat(n2);
+    if(operator == '+') return add(num1, num2);
+    else if(operator == "-") return subtract(num1, num2);
+    else if(operator == "/") return divide(num1, num2);
+    else return multiply(num1, num2);
+}
+
+function add(num1, num2){
+    return num1 + num2
+}
+
+function subtract(num1, num2){
+    return num1 - num2
+}
+
+function divide(num1, num2){
+    return num1 / num2
+}
+
+function multiply(num1, num2){
+    return num1 * num2
+}
+
+// const btn = document.querySelectorAll('button');
+// const displayChange = document.getElementById('display');
+// operators = ["X", "-", "+", "/", "="]
+
+// btn.forEach(function(i){
+//   i.addEventListener("click", function(e){
+//     if(!operators.includes(e.target.innerHTML))
+//     displayChange.value = e.target.innerHTML;
+//   })
+// })
