@@ -1,11 +1,14 @@
 .calculator {
 	max-width: 40%;
 	margin: 0 auto;
+    background-color: rgb(70, 70, 70);
+    border-radius: 20px;
+    padding: 20px;
 }
 
 .calculator .display {
 	width: 100%;
-	background-color: darkgrey;
+	/* background-color: rgb(70, 70, 70); */
 	font-size: 48px;
 	display: flex;
 	color: #ffffff;
@@ -22,6 +25,9 @@
 .calculator .keys button {
 	flex: 1 20%;
 	font-size: 26px;
+    height: 50px;
+    width:50px;
+    border-radius: 100%;
 }
 
 .operator {
