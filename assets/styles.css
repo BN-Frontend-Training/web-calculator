@@ -1,0 +1,37 @@
+.calculator {
+	max-width: 40%;
+	margin: 0 auto;
+}
+
+.calculator .display {
+	width: 100%;
+	background-color: darkgrey;
+	font-size: 48px;
+	display: flex;
+	color: #ffffff;
+	justify-content: flex-end;
+}
+
+.calculator .keys {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 20px 0;
+}
+
+.calculator .keys button {
+	flex: 1 20%;
+	font-size: 26px;
+}
+
+.operator {
+	background-color: orange;
+}
+
+.equal {
+	background-color: green;
+}
+
+.operator.active {
+	background-color: gray;
+}
