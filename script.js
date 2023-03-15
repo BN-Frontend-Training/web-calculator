@@ -12,17 +12,16 @@ let previousKeyType = null; //['num','operator','other']
 keys.addEventListener("click", (e) => {
 	const target = e.target;
 
-	// console.log(`target ==> ${target.value}`)
 	enableDecimal();
 	
 	if (target.matches("button")) {
 		const key = target.dataset['key'];
 
 		// Change clear text to CE if user starts clicking keys
-		if (key !== 'clear') {
-			const clearButton = document.querySelector('.clear')
-			clearButton.textContent = 'C'
-		  }
+		// if (key !== 'clear') {
+		// 	const clearButton = document.querySelector('.clear')
+		// 	clearButton.textContent = 'C'
+		//   }
 
 		// Remove active class from actions
 		const allOperatorButtons = document.querySelectorAll(".operator");
@@ -56,7 +55,8 @@ keys.addEventListener("click", (e) => {
 				operator = key;
 			}
 		} else {
-			// Other Keys
+			/** Other Keys **/
+			// Decimal
 			if (key === "decimal") {
 				previousKeyType = key;
 				if (!displayNum.includes('.')) {
@@ -67,9 +67,21 @@ keys.addEventListener("click", (e) => {
 				calculatorDisplay(displayNum);
 			}
 			
+			// Clear All (AC)
 			if (key === 'clear') {
-				clearCalculator(target);
+				resetCalculator();
 				previousKeyType = key;
+			}
+
+			// CE
+			if (key === 'clear-entry') {
+				clearEntry(target);
+				previousKeyType = key;
+			}
+
+			// Backspace
+			if (key === 'backspace') {
+				// Perfome backspace
 			}
 			
 			if (key === 'calculate') {
@@ -87,25 +99,22 @@ keys.addEventListener("click", (e) => {
 				previousSecondValue = secondValue;
 				previousKeyType = key;
 			}
+			
 		}
   	}
 });
 
-function clearCalculator(element) {
-	if (element.innerText === 'AC') {
-		resetCalculator();
-	} else {
-		element.innerText = 'AC'
-	}
+function clearEntry() {
 	calculatorDisplay('0');
 }
 
-function resetCalculator(element) {
+function resetCalculator() {
 	displayNum = '0';
 	firstValue = null;
 	secondValue = null;
 	operator = null;
-	previousKeyType = null
+	previousKeyType = null;
+	calculatorDisplay('0');
 }
 
 function calculatorDisplay(displayValue) {
@@ -146,5 +155,3 @@ function enableDecimal() {
 	decimalEl = document.querySelector('.decimal');
 	decimalEl.disabled = displayNum.includes('.');
 }
-
-
