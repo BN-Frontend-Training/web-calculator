@@ -1,5 +1,9 @@
 .calculator {
-	max-width: 40%;
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 300px;
+	min-width: 300px;
 	margin: 0 auto;
     background-color: rgb(70, 70, 70);
     border-radius: 20px;
@@ -18,26 +22,58 @@
 .calculator .keys {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 400px;
 	gap: 10px;
 	margin: 20px 0;
 }
 
-.calculator .keys button {
-	flex: 1 20%;
+/* .line-calc{
+	width: 100%;
+} */
+
+button {
+	/* flex: 1 20%; */
 	font-size: 26px;
-    height: 50px;
-    width:50px;
+    height: 60px;
+    width:60px;
     border-radius: 100%;
+	border-style: none;
+}
+
+.delete{
+	height: 60px;
+	width: 140px;
+	border-radius:60px;
 }
 
 .operator {
-	background-color: orange;
+	background-color: rgb(255, 166, 0);
 }
 
 .equal {
 	background-color: green;
+	height: 60px;
+	width: 140px;
+	border-radius:60px;
 }
 
 .operator.active {
 	background-color: gray;
+	color:#ffffff;
 }
+
+/* @media (max-height: 440px) and (orientation: landscape){
+	.calculator{
+		max-width: 40%;
+	}
+	.display{
+		font-size: 38px;
+	}
+	button{
+		font-size: 20px;
+		height: 40px;
+		width: 40px;
+	}
+} */

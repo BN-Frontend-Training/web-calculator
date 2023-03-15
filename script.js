@@ -58,6 +58,11 @@ keys.addEventListener("click", (e) => {
 			
 			if (key === 'clear') {
 				// previousKeyType = key;
+				displayNum = '0';
+				firstValue = null;
+				secondValue = null;
+				operator = null;
+				calculatorDisplay(displayNum)
 			}
 			
 			if (key === 'calculate') {
@@ -65,6 +70,7 @@ keys.addEventListener("click", (e) => {
 				secondValue = displayNum;
 				calculatorDisplay(operate(operator, firstValue, secondValue));
 			}
+			
 		}
   	}
 });
