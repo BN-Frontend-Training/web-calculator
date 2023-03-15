@@ -17,12 +17,6 @@ keys.addEventListener("click", (e) => {
 	if (target.matches("button")) {
 		const key = target.dataset['key'];
 
-		// Change clear text to CE if user starts clicking keys
-		// if (key !== 'clear') {
-		// 	const clearButton = document.querySelector('.clear')
-		// 	clearButton.textContent = 'C'
-		//   }
-
 		// Remove active class from actions
 		const allOperatorButtons = document.querySelectorAll(".operator");
 		allOperatorButtons.forEach(k => k.classList.remove('active'))
@@ -105,7 +99,8 @@ keys.addEventListener("click", (e) => {
 });
 
 function clearEntry() {
-	calculatorDisplay('0');
+	displayNum = '0';
+	calculatorDisplay(displayNum);
 }
 
 function resetCalculator() {
