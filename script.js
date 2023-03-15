@@ -105,7 +105,8 @@ keys.addEventListener("click", (e) => {
 });
 
 function clearEntry() {
-	calculatorDisplay('0');
+	displayNum = '0';
+	calculatorDisplay(displayNum);
 }
 
 function resetCalculator() {
