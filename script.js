@@ -7,7 +7,7 @@ let firstValue = null;
 let secondValue = null;
 let previousSecondValue = null;
 let operator = null;
-let previousKeyType = null; //['num','operator','other']
+let previousKeyType = null; //'num','operator','other'
 
 keys.addEventListener("click", (e) => {
 	const target = e.target;
@@ -118,7 +118,7 @@ function resetCalculator() {
 	secondValue = null;
 	operator = null;
 	previousKeyType = null;
-	calculatorDisplay('0');
+	calculatorDisplay(displayNum);
 }
 
 function calculatorDisplay(displayValue) {
