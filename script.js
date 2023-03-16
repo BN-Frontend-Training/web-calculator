@@ -41,12 +41,14 @@ keys.addEventListener("click", (e) => {
 					const result = operate(operator, firstValue, displayNum);
 					calculatorDisplay(result);
 					firstValue = result;
+					console.log(`result ==> ${result}`)
 				} else {
 					firstValue = displayNum;
 				}
-				displayNum = '0';
-				previousKeyType = 'operator'
+				previousKeyType = 'operator';
 				operator = key;
+
+				console.log(`${operator} ${firstValue}`)
 			}
 		} else {
 			/** Other Keys **/
@@ -75,7 +77,14 @@ keys.addEventListener("click", (e) => {
 
 			// Backspace
 			if (key === 'backspace') {
-				// Perfome backspace
+				if (displayNum !== '0') {
+					displayNum = displayNum.slice(0, -1);
+				} 
+
+				if (displayNum.length === 0) {
+					displayNum = '0';
+				}
+				calculatorDisplay(displayNum);
 			}
 			
 			if (key === 'calculate') {
