@@ -44,7 +44,7 @@ keys.addEventListener("click", (e) => {
 				} else {
 					firstValue = displayNum;
 				}
-
+				displayNum = '0';
 				previousKeyType = 'operator'
 				operator = key;
 			}
