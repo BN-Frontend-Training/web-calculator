@@ -19,37 +19,36 @@ keys.addEventListener("click", (e) => {
 
 		// Remove active class from actions
 		const allOperatorButtons = document.querySelectorAll(".operator");
-		allOperatorButtons.forEach(k => k.classList.remove('active'))
+		allOperatorButtons.forEach(k => k.classList.remove('active'));
 
 		// Number Keys
 		if (target.classList.contains("number")) {
 			if (displayNum === '0' || previousKeyType === 'operator' || previousKeyType === 'calculate') {
 				displayNum = key;
-				previousKeyType = 'num'
 			} else {
 				displayNum += key;
-				previousKeyType = 'num'
 			}
+			previousKeyType = 'num';
 			calculatorDisplay(displayNum);
 		} else if (target.classList.contains("operator")) {
 			// Operator Keys
-			if (key === '+' || key === '-' || key === '*' || key === '/') {
-				// Make the selected operator active
-				target.classList.add('active');
+			// Make the selected operator active
+			target.classList.add('active');
 
-				if (firstValue && operator && previousKeyType !== 'operator') {
-					const result = operate(operator, firstValue, displayNum);
-					calculatorDisplay(result);
-					firstValue = result;
-					console.log(`result ==> ${result}`)
-				} else {
-					firstValue = displayNum;
-				}
-				previousKeyType = 'operator';
-				operator = key;
-
-				console.log(`${operator} ${firstValue}`)
+			if (firstValue && operator && previousKeyType !== 'operator') {
+				const result = operate(operator, firstValue, displayNum);
+				calculatorDisplay(result);
+				firstValue = result;
+				console.log(`result ==> ${result}`)
+			} else {
+				firstValue = displayNum;
 			}
+			// TODO: Fix issue where continous operations cause displayNum to be 0
+			displayNum = '0';
+			previousKeyType = 'operator';
+			operator = key;
+
+			console.log(`${operator} ${firstValue}`)
 		} else {
 			/** Other Keys **/
 			// Decimal
@@ -77,14 +76,7 @@ keys.addEventListener("click", (e) => {
 
 			// Backspace
 			if (key === 'backspace') {
-				if (displayNum !== '0') {
-					displayNum = displayNum.slice(0, -1);
-				} 
-
-				if (displayNum.length === 0) {
-					displayNum = '0';
-				}
-				calculatorDisplay(displayNum);
+				backspace();
 			}
 			
 			if (key === 'calculate') {
@@ -108,8 +100,13 @@ keys.addEventListener("click", (e) => {
 });
 
 function clearEntry() {
+	console.log(`firstValue ${firstValue} operator ${operator}`)
 	displayNum = '0';
+	if (firstValue && operator) {
+		firstValue = null;
+	}
 	calculatorDisplay(displayNum);
+	console.log(`after ==> firstValue ${firstValue} operator ${operator}`)
 }
 
 function resetCalculator() {
@@ -119,6 +116,22 @@ function resetCalculator() {
 	operator = null;
 	previousKeyType = null;
 	calculatorDisplay(displayNum);
+	// window.location.reload();
+}
+
+function backspace() {	
+	const display = document.querySelector(".display");
+    let lastNum = display.innerText;
+	console.log(`lastNum ==> ${lastNum}`);
+    lastNum = lastNum.slice(0, -1);
+    display.innerText = lastNum;
+
+    if (display.innerText.length == 0) {
+		displayNum = '0';
+		calculatorDisplay(displayNum);
+    }
+
+	displayNum = lastNum;
 }
 
 function calculatorDisplay(displayValue) {
