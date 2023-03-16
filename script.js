@@ -7,7 +7,7 @@ let firstValue = null;
 let secondValue = null;
 let previousSecondValue = null;
 let operator = null;
-let previousKeyType = null; //['num','operator','other']
+let previousKeyType = null; //'num','operator','other'
 
 keys.addEventListener("click", (e) => {
 	const target = e.target;
@@ -16,12 +16,6 @@ keys.addEventListener("click", (e) => {
 	
 	if (target.matches("button")) {
 		const key = target.dataset['key'];
-
-		// Change clear text to CE if user starts clicking keys
-		// if (key !== 'clear') {
-		// 	const clearButton = document.querySelector('.clear')
-		// 	clearButton.textContent = 'C'
-		//   }
 
 		// Remove active class from actions
 		const allOperatorButtons = document.querySelectorAll(".operator");
@@ -47,12 +41,14 @@ keys.addEventListener("click", (e) => {
 					const result = operate(operator, firstValue, displayNum);
 					calculatorDisplay(result);
 					firstValue = result;
+					console.log(`result ==> ${result}`)
 				} else {
 					firstValue = displayNum;
 				}
-				displayNum = '0';
-				previousKeyType = 'operator'
+				previousKeyType = 'operator';
 				operator = key;
+
+				console.log(`${operator} ${firstValue}`)
 			}
 		} else {
 			/** Other Keys **/
@@ -81,7 +77,14 @@ keys.addEventListener("click", (e) => {
 
 			// Backspace
 			if (key === 'backspace') {
-				// Perfome backspace
+				if (displayNum !== '0') {
+					displayNum = displayNum.slice(0, -1);
+				} 
+
+				if (displayNum.length === 0) {
+					displayNum = '0';
+				}
+				calculatorDisplay(displayNum);
 			}
 			
 			if (key === 'calculate') {
@@ -105,7 +108,8 @@ keys.addEventListener("click", (e) => {
 });
 
 function clearEntry() {
-	calculatorDisplay('0');
+	displayNum = '0';
+	calculatorDisplay(displayNum);
 }
 
 function resetCalculator() {
@@ -114,7 +118,7 @@ function resetCalculator() {
 	secondValue = null;
 	operator = null;
 	previousKeyType = null;
-	calculatorDisplay('0');
+	calculatorDisplay(displayNum);
 }
 
 function calculatorDisplay(displayValue) {
