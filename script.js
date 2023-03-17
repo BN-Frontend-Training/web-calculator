@@ -204,7 +204,7 @@ function operate(operator, n1, n2) {
 	const num2 = parseFloat(n2);
     if (operator == '+') total = num1 + num2;
     else if (operator == '-') total = num1 - num2;
-    else if (operator == '/') total = num2 !== 0 ?  num1 / num2 : '😂';
+    else if (operator == '/') total = num2 !== 0 ?  num1 / num2 : "You can't divide by 0! 😂";
     else if (operator == '*') total = num1 * num2;
 	console.log(`total ${total}`);
 	if (total.toString().length > MAX_CHARACTERS) {
