@@ -2,6 +2,8 @@
 const calculator = document.querySelector('.calculator');
 const keys = document.querySelectorAll('button');
 const allOperatorButtons = document.querySelectorAll('.operator');
+const allNumberButtons = document.querySelectorAll('.number');
+const deleteElement = document.querySelector(".delete");
 
 const MAX_CHARACTERS = 12;
 const operators = ['+','-','*','/'];
@@ -28,6 +30,7 @@ function onKeyboardKeys(e) {
 	// Numbers
 	var isNumber = isFinite(key);
 	if (isNumber) {
+		unSetNumberButtonBackground(key);
 		handleNumbersKey(e.key);
 	}
 
@@ -38,6 +41,7 @@ function onKeyboardKeys(e) {
 
 	switch(e.key) {
 		case "Backspace":
+			setElementBackground(deleteElement, '#999999');
 			backspace();
 			break;
 		case "Enter":
@@ -230,4 +234,38 @@ function enableDecimal() {
 
 function roundNumber(num, places) {
     return Number.parseFloat(num).toExponential(places);
+}
+
+document.addEventListener('keyup', keyReleased);
+function keyReleased(e) {
+	const key = e.key;
+
+	let isNumber = isFinite(key);
+	if (isNumber) {
+		setNumberButtonBackground(key);
+	}
+
+    if (e.key == "Backspace") {
+		setElementBackground(deleteElement, '#ffffff');
+    }
+}
+
+function setNumberButtonBackground(key) {
+	allNumberButtons.forEach(button => {
+		if (button.dataset.key === key) {
+			setElementBackground(button, '#ffffff');
+		}
+	})
+}
+
+function unSetNumberButtonBackground(key) {
+	allNumberButtons.forEach(button => {
+		if (button.dataset.key === key) {
+			setElementBackground(button, '#999999');
+		}
+	})
+}
+
+function setElementBackground(element, color) {
+	element.style.backgroundColor = color;
 }
