@@ -14,8 +14,6 @@ let previousKeyType = null; //'num','operator','other'
 keys.addEventListener("click", (e) => {
 	const target = e.target;
 
-	enableDecimal();
-	
 	if (target.matches("button")) {
 		const key = target.dataset['key'];
 
@@ -59,6 +57,7 @@ keys.addEventListener("click", (e) => {
 			}
 			
 		}
+		enableDecimal();
   	}
 });
 
