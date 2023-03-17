@@ -1,8 +1,10 @@
 
 const calculator = document.querySelector('.calculator');
-const keys = document.querySelector(".keys");
+const keys = document.querySelectorAll('button');
+const allOperatorButtons = document.querySelectorAll('.operator');
 
 const MAX_CHARACTERS = 12;
+const operators = ['+','-','*','/'];
 
 let displayNum = '0';
 let firstNumber = null;
@@ -11,57 +13,86 @@ let previousSecondValue = null;
 let operator = null;
 let previousKeyType = null; //'num','operator','other'
 
-keys.addEventListener("click", (e) => {
-	const target = e.target;
+addKeyboardSupport();
+function addKeyboardSupport() {
+	window.addEventListener('keydown', onKeyboardKeys)
+}
 
-	enableDecimal();
-	
-	if (target.matches("button")) {
+function onKeyboardKeys(e) {
+	const key = e.key;
+	// console.log(`keydown ${key}`);
+
+	// Remove active class from actions
+	unselectActiveOperator();
+
+	// Numbers
+	var isNumber = isFinite(key);
+	if (isNumber) {
+		handleNumbersKey(e.key);
+	}
+
+	// Operators
+	if (operators.includes(key)) {
+		handleOperatorKeys(key);
+	}
+
+	switch(e.key) {
+		case "Backspace":
+			backspace();
+			break;
+		case "Enter":
+			handleCalculateKey();
+			  break;
+		case ".":
+			handleDecimalKey();
+			  break;
+		default:
+	}
+};
+
+onButtonKeyClicks();
+function onButtonKeyClicks() {
+	keys.forEach(k => { 
+		k.addEventListener("click", (e) => {
+		const target = e.target;
+		
 		const key = target.dataset['key'];
 
+		enableDecimal();
+
 		// Remove active class from actions
-		const allOperatorButtons = document.querySelectorAll(".operator");
-		allOperatorButtons.forEach(k => k.classList.remove('active'));
+		unselectActiveOperator();
 
 		// Number Keys
 		if (target.classList.contains("number")) {
 			handleNumbersKey(key);
 		} else if (target.classList.contains("operator")) {
 			// Operator Keys
-			handleOperatorKeys(target, key);
+			handleOperatorKeys(key);
 		} else {
 			/** Other Keys **/
-			// Decimal
-			if (key === "decimal") {
-				handleDecimalKey();
-			}
-			
-			// Clear All (AC)
-			if (key === 'clear') {
-				resetCalculator();
-				previousKeyType = key;
-			}
-
-			// CE
-			if (key === 'clear-entry') {
-				clearEntry(target);
-				previousKeyType = key;
-			}
-
-			// Backspace
-			if (key === 'backspace') {
-				backspace();
-			}
-			
-			// Calculate
-			if (key === 'calculate') {
-				handleCalculateKey(key);
-			}
-			
+			switch(key) {
+				case "decimal":
+					handleDecimalKey();
+					break;
+				case "clear":
+					resetCalculator();
+					break;
+				case "clear-entry":
+					clearEntry(target);
+					break;
+				case "backspace":
+					backspace();
+					break;
+				case "calculate":
+					handleCalculateKey();
+					break;
+				default:
+			}		
 		}
-  	}
-});
-
+	})})
+}
+	
 function handleNumbersKey(key) {
 	if (displayNum === '0' || previousKeyType === 'operator' || previousKeyType === 'calculate') {
 		displayNum = key;
@@ -69,16 +100,16 @@ function handleNumbersKey(key) {
 		displayNum += key;
 	}
 	previousKeyType = 'num';
-	calculatorDisplay(displayNum);
+	updateDisplay(displayNum);
 }
 
-function handleOperatorKeys(target, key) {
+function handleOperatorKeys(key) {
 	// Make the selected operator active
-	target.classList.add('active');
+	setSelectedOperator(key);
 
 	if (firstNumber && operator && previousKeyType !== 'operator') {
 		const result = operate(operator, firstNumber, displayNum);
-		calculatorDisplay(result);
+		updateDisplay(result);
 		firstNumber = result;
 		console.log(`result ==> ${result}`)
 	} else {
@@ -102,7 +133,7 @@ function handleCalculateKey(key) {
      	_firstNumber = displayNum;
       	secondNumber = previousSecondValue;
     }
-    calculatorDisplay(operate(operator, firstNumber, secondNumber));
+    updateDisplay(operate(operator, firstNumber, secondNumber));
   }
   	previousSecondValue = secondNumber;
   	previousKeyType = key;
@@ -115,7 +146,7 @@ function handleDecimalKey(key) {
 	} else if (previousKeyType === 'operator'  || previousKeyType === 'calculate') {
 		displayNum = '0.';
 	}
-	calculatorDisplay(displayNum);
+	updateDisplay(displayNum);
 }
 
 function clearEntry() {
@@ -124,7 +155,7 @@ function clearEntry() {
 	if (firstNumber && operator) {
 		firstNumber = null;
 	}
-	calculatorDisplay(displayNum);
+	updateDisplay(displayNum);
 	console.log(`after ==> firstNumber ${firstNumber} operator ${operator}`)
 }
 
@@ -134,7 +165,8 @@ function resetCalculator() {
 	secondNumber = null;
 	operator = null;
 	previousKeyType = null;
-	calculatorDisplay(displayNum);
+	updateDisplay(displayNum);
+	console.clear();
 	// window.location.reload();
 }
 
@@ -147,13 +179,13 @@ function backspace() {
 
     if (display.innerText.length == 0) {
 		displayNum = '0';
-		calculatorDisplay(displayNum);
+		updateDisplay(displayNum);
     }
 
 	displayNum = lastNum;
 }
 
-function calculatorDisplay(displayValue) {
+function updateDisplay(displayValue) {
 	const display = document.querySelector('.display')
     display.innerText = displayValue;
     if (displayValue.length > MAX_CHARACTERS) {
@@ -177,6 +209,18 @@ function operate(operator, n1, n2) {
 	} else {
 		return total;
 	}
+}
+
+function setSelectedOperator(key) {
+  allOperatorButtons.forEach((element) => {
+    if (element.dataset.key === key) {
+      element.classList.add("active");
+    }
+  });
+}
+
+function unselectActiveOperator() {
+	allOperatorButtons.forEach(k => k.classList.remove('active'));
 }
 
 function enableDecimal() {
