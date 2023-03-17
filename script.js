@@ -53,46 +53,46 @@ function onKeyboardKeys(e) {
 onButtonKeyClicks();
 function onButtonKeyClicks() {
 	keys.forEach(k => { 
-		k.addEventListener("click", (e) => {
-		const target = e.target;
-		
-		const key = target.dataset['key'];
+			k.addEventListener("click", (e) => {
+			const target = e.target;
+			
+			const key = target.dataset['key'];
 
-		enableDecimal();
+			// Remove active class from actions
+			unselectActiveOperator();
 
-		// Remove active class from actions
-		unselectActiveOperator();
-
-		// Number Keys
-		if (target.classList.contains("number")) {
-			handleNumbersKey(key);
-		} else if (target.classList.contains("operator")) {
-			// Operator Keys
-			handleOperatorKeys(key);
-		} else {
-			/** Other Keys **/
-			switch(key) {
-				case "decimal":
-					handleDecimalKey();
-					break;
-				case "clear":
-					resetCalculator();
-					break;
-				case "clear-entry":
-					clearEntry(target);
-					break;
-				case "backspace":
-					backspace();
-					break;
-				case "calculate":
-					handleCalculateKey();
-					break;
-				default:
-			}		
-		}
-	})})
+			// Number Keys
+			if (target.classList.contains("number")) {
+				handleNumbersKey(key);
+			} else if (target.classList.contains("operator")) {
+				// Operator Keys
+				handleOperatorKeys(key);
+			} else {
+				/** Other Keys **/
+				switch(key) {
+					case "decimal":
+						handleDecimalKey();
+						break;
+					case "clear":
+						resetCalculator();
+						break;
+					case "clear-entry":
+						clearEntry(target);
+						break;
+					case "backspace":
+						backspace();
+						break;
+					case "calculate":
+						handleCalculateKey();
+						break;
+					default:
+				}		
+			}
+			enableDecimal();
+  		})
+	})
 }
-	
+
 function handleNumbersKey(key) {
 	if (displayNum === '0' || previousKeyType === 'operator' || previousKeyType === 'calculate') {
 		displayNum = key;
