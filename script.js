@@ -4,6 +4,8 @@ const keys = document.querySelectorAll('button');
 const allOperatorButtons = document.querySelectorAll('.operator');
 const allNumberButtons = document.querySelectorAll('.number');
 const deleteElement = document.querySelector(".delete");
+const calculateElement = document.querySelector(".equal");
+const decimalElement = document.querySelector(".decimal");
 
 const MAX_CHARACTERS = 12;
 const operators = ['+','-','*','/'];
@@ -45,9 +47,11 @@ function onKeyboardKeys(e) {
 			backspace();
 			break;
 		case "Enter":
+			setElementBackground(calculateElement, '#226c43');
 			handleCalculateKey();
 			  break;
 		case ".":
+			setElementBackground(decimalElement, '#999999');
 			handleDecimalKey();
 			  break;
 		default:
@@ -155,9 +159,10 @@ function handleDecimalKey(key) {
 
 function clearEntry() {
 	console.log(`firstNumber ${firstNumber} operator ${operator}`)
-	displayNum = '0';
+	// displayNum = '0';
 	if (firstNumber && operator) {
 		firstNumber = null;
+		displayNum = '0';
 	}
 	updateDisplay(displayNum);
 	console.log(`after ==> firstNumber ${firstNumber} operator ${operator}`)
@@ -245,9 +250,13 @@ function keyReleased(e) {
 		setNumberButtonBackground(key);
 	}
 
-    if (e.key == "Backspace") {
+    if (key == "Backspace") {
 		setElementBackground(deleteElement, '#ffffff');
-    }
+    } else if (key == "Enter") {
+		setElementBackground(calculateElement, 'mediumseagreen');
+	} else if (key == ".") {
+		setElementBackground(decimalElement, '#ffffff');
+	}
 }
 
 function setNumberButtonBackground(key) {
