@@ -17,6 +17,7 @@
 	display: flex;
 	color: #ffffff;
 	justify-content: flex-end;
+	min-height: 64px;
 }
 
 .calculator .keys {
@@ -35,7 +36,7 @@
 
 button {
 	/* flex: 1 20%; */
-	font-size: 26px;
+	font-size: 22px;
     height: 60px;
     width:60px;
     border-radius: 100%;
@@ -53,7 +54,7 @@ button {
 }
 
 .equal {
-	background-color: green;
+	background-color: mediumseagreen;
 	height: 60px;
 	width: 140px;
 	border-radius:60px;
@@ -64,7 +65,7 @@ button {
 	color:#ffffff;
 }
 
-/* @media (max-height: 440px) and (orientation: landscape){
+/* @media (max-height: 440px) and (orientation: landscape) {
 	.calculator{
 		max-width: 40%;
 	}
