@@ -30,7 +30,7 @@ function onKeyboardKeys(e) {
 	unselectActiveOperator();
 
 	// Numbers
-	let isNumber = isFinite(key);
+	const isNumber = isFinite(key);
 	if (isNumber) {
 		unSetNumberButtonBackground(key);
 		handleNumbersKey(e.key);
@@ -57,7 +57,6 @@ function onKeyboardKeys(e) {
 		default:
 	}
 };
-
 
 clickKeyEvents();
 function clickKeyEvents() {
@@ -238,7 +237,10 @@ function enableDecimal() {
 }
 
 function roundNumber(num, places) {
-    return Number.parseFloat(num).toExponential(places);
+	if (isNaN(num)) {
+		return num;
+	}
+	return parseFloat(num).toExponential(places);
 }
 
 document.addEventListener('keyup', keyReleased);
