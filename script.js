@@ -30,7 +30,7 @@ function onKeyboardKeys(e) {
 	unselectActiveOperator();
 
 	// Numbers
-	var isNumber = isFinite(key);
+	let isNumber = isFinite(key);
 	if (isNumber) {
 		unSetNumberButtonBackground(key);
 		handleNumbersKey(e.key);
