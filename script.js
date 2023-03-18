@@ -58,47 +58,52 @@ function onKeyboardKeys(e) {
 	}
 };
 
-onButtonKeyClicks();
-function onButtonKeyClicks() {
-	keys.forEach(k => { 
-			k.addEventListener("click", (e) => {
-			const target = e.target;
-			
-			const key = target.dataset['key'];
 
-			// Remove active class from actions
-			unselectActiveOperator();
-
-			// Number Keys
-			if (target.classList.contains("number")) {
-				handleNumbersKey(key);
-			} else if (target.classList.contains("operator")) {
-				// Operator Keys
-				handleOperatorKeys(key);
-			} else {
-				/** Other Keys **/
-				switch(key) {
-					case "decimal":
-						handleDecimalKey();
-						break;
-					case "clear":
-						resetCalculator();
-						break;
-					case "clear-entry":
-						clearEntry(target);
-						break;
-					case "backspace":
-						backspace();
-						break;
-					case "calculate":
-						handleCalculateKey();
-						break;
-					default:
-				}		
-			}
-			enableDecimal();
-  		})
+clickKeyEvents();
+function clickKeyEvents() {
+	keys.forEach(k => {
+		k.addEventListener("click", (e) => {
+			onButtonKeyClicks(e);
+		})
 	})
+}
+
+function onButtonKeyClicks(e) {
+	const target = e.target;
+	
+	const key = target.dataset['key'];
+
+	// Remove active class from actions
+	unselectActiveOperator();
+
+	// Number Keys
+	if (target.classList.contains("number")) {
+		handleNumbersKey(key);
+	} else if (target.classList.contains("operator")) {
+		// Operator Keys
+		handleOperatorKeys(key);
+	} else {
+		/** Other Keys **/
+		switch(key) {
+			case "decimal":
+				handleDecimalKey();
+				break;
+			case "clear":
+				resetCalculator();
+				break;
+			case "clear-entry":
+				clearEntry(target);
+				break;
+			case "backspace":
+				backspace();
+				break;
+			case "calculate":
+				handleCalculateKey();
+				break;
+			default:
+		}		
+	}
+	enableDecimal();
 }
 
 function handleNumbersKey(key) {
@@ -123,8 +128,6 @@ function handleOperatorKeys(key) {
 	} else {
 		firstNumber = displayNum;
 	}
-	// TODO: Fix issue where continous operations cause displayNum to be 0
-	// 	displayNum = '0';
 
 	previousKeyType = 'operator';
 	operator = key;
@@ -159,10 +162,9 @@ function handleDecimalKey(key) {
 
 function clearEntry() {
 	console.log(`firstNumber ${firstNumber} operator ${operator}`)
-	// displayNum = '0';
-	if (firstNumber && operator) {
+	displayNum = '0';
+	if (firstNumber === displayNum) {
 		firstNumber = null;
-		displayNum = '0';
 	}
 	updateDisplay(displayNum);
 	console.log(`after ==> firstNumber ${firstNumber} operator ${operator}`)
@@ -182,7 +184,6 @@ function resetCalculator() {
 function backspace() {	
 	const display = document.querySelector(".display");
     let lastNum = display.innerText;
-	console.log(`lastNum ==> ${lastNum}`);
     lastNum = lastNum.slice(0, -1);
     display.innerText = lastNum;
 
@@ -213,7 +214,6 @@ function operate(operator, n1, n2) {
     else if (operator == '*') total = num1 * num2;
 	console.log(`total ${total}`);
 	if (total.toString().length > MAX_CHARACTERS) {
-		console.log('roundNumber' + roundNumber(total, 2))
 		return roundNumber(total, 2);
 	} else {
 		return total;
