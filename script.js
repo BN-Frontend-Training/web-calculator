@@ -248,7 +248,7 @@ document.addEventListener('keyup', keyReleased);
 function keyReleased(e) {
 	const key = e.key;
 
-	let isNumber = isFinite(key);
+	const isNumber = isFinite(key);
 	if (isNumber) {
 		setNumberButtonBackground(key);
 	}
