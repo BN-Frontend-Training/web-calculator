@@ -214,7 +214,7 @@ function operate(operator, n1, n2) {
     else if (operator == '*') total = num1 * num2;
 	console.log(`total ${total}`);
 	if (total.toString().length > MAX_CHARACTERS) {
-		return roundNumber(total, MAX_CHARACTERS);
+		return roundNumber(total);
 	} else {
 		return total;
 	}
@@ -237,11 +237,11 @@ function enableDecimal() {
 	decimalEl.disabled = displayNum.includes('.');
 }
 
-function roundNumber(num, places) {
+function roundNumber(num) {
 	if (isNaN(num)) {
 		return num;
 	}
-	return Math.round(num);
+	return Math.round((num + Number.EPSILON) * 100000000) / 100000000;
 }
 
 document.addEventListener('keyup', keyReleased);
