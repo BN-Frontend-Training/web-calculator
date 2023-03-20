@@ -39,19 +39,23 @@ function onKeyboardKeys(e) {
 
 	// Operators
 	if (operators.includes(key)) {
+		e.preventDefault();
 		handleOperatorKeys(key);
 	}
 
 	switch(e.key) {
 		case "Backspace":
+			e.preventDefault();
 			setElementBackground(deleteElement, '#999999');
 			backspace();
 			break;
 		case "Enter":
+			e.preventDefault();
 			setElementBackground(calculateElement, '#226c43');
 			handleCalculateKey();
 			  break;
 		case ".":
+			e.preventDefault();
 			setElementBackground(decimalElement, '#999999');
 			handleDecimalKey();
 			  break;
