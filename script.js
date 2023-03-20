@@ -7,7 +7,8 @@ const deleteElement = document.querySelector(".delete");
 const calculateElement = document.querySelector(".equal");
 const decimalElement = document.querySelector(".decimal");
 
-const MAX_CHARACTERS = 12;
+const MAX_CHARACTERS = 9;
+const divideByZeroMessage = "😂";
 const operators = ['+','-','*','/'];
 
 let displayNum = '0';
@@ -195,7 +196,7 @@ function backspace() {
 }
 
 function updateDisplay(displayValue) {
-	const display = document.querySelector('.display')
+	const display = document.querySelector('.display');
     display.innerText = displayValue;
     if (displayValue.length > MAX_CHARACTERS) {
         display.innerText = displayValue.substring(0, MAX_CHARACTERS);
@@ -209,11 +210,11 @@ function operate(operator, n1, n2) {
 	const num2 = parseFloat(n2);
     if (operator == '+') total = num1 + num2;
     else if (operator == '-') total = num1 - num2;
-    else if (operator == '/') total = num2 !== 0 ?  num1 / num2 : "You can't divide by 0! 😂";
+    else if (operator == '/') total = num2 !== 0 ?  num1 / num2 : divideByZeroMessage;
     else if (operator == '*') total = num1 * num2;
 	console.log(`total ${total}`);
 	if (total.toString().length > MAX_CHARACTERS) {
-		return roundNumber(total, 2);
+		return roundNumber(total, MAX_CHARACTERS);
 	} else {
 		return total;
 	}
@@ -240,7 +241,7 @@ function roundNumber(num, places) {
 	if (isNaN(num)) {
 		return num;
 	}
-	return parseFloat(num).toExponential(places);
+	return Math.round(num);
 }
 
 document.addEventListener('keyup', keyReleased);
