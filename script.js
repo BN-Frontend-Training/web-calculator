@@ -7,7 +7,7 @@ const deleteElement = document.querySelector(".delete");
 const calculateElement = document.querySelector(".equal");
 const decimalElement = document.querySelector(".decimal");
 
-const MAX_CHARACTERS = 9;
+const MAX_CHARACTERS = 12;
 const divideByZeroMessage = "😂";
 const operators = ['+','-','*','/'];
 
@@ -202,8 +202,9 @@ function backspace() {
 function updateDisplay(displayValue) {
 	const display = document.querySelector('.display');
     display.innerText = displayValue;
-    if (displayValue.length > MAX_CHARACTERS) {
-        display.innerText = displayValue.substring(0, MAX_CHARACTERS);
+    if (displayValue.toString().length > MAX_CHARACTERS) {
+		console.log(`displayValue => ${displayValue}`)
+        display.innerText = displayValue.toString().substring(0, MAX_CHARACTERS);
     }
 }
 
