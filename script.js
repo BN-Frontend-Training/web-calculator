@@ -259,18 +259,18 @@ function keyReleased(e) {
 	}
 
     if (key == "Backspace") {
-		setElementBackground(deleteElement, '#ffffff');
+		setElementBackground(deleteElement, '#c1c1c1');
     } else if (key == "Enter") {
 		setElementBackground(calculateElement, 'mediumseagreen');
 	} else if (key == ".") {
-		setElementBackground(decimalElement, '#ffffff');
+		setElementBackground(decimalElement, '#333333');
 	}
 }
 
 function setNumberButtonBackground(key) {
 	allNumberButtons.forEach(button => {
 		if (button.dataset.key === key) {
-			setElementBackground(button, '#ffffff');
+			setElementBackground(button, '#333333');
 		}
 	})
 }
@@ -278,7 +278,7 @@ function setNumberButtonBackground(key) {
 function unSetNumberButtonBackground(key) {
 	allNumberButtons.forEach(button => {
 		if (button.dataset.key === key) {
-			setElementBackground(button, '#999999');
+			setElementBackground(button, '#666666');
 		}
 	})
 }
